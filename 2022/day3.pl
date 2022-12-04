@@ -1,12 +1,7 @@
-% Read Input
-drop_last([_], []).
-drop_last([H|T], [H|S]) :-
-    drop_last(T,S).
+:- use_module(util, [read_input_as_lines/2]).
 
 read_input(Rucksacks) :-
-    read_file_to_string("resources/day3.txt",S,[]),
-    split_string(S,"\n","",L),
-    drop_last(L,Strings),
+    read_input_as_lines("resources/day3.txt", Strings),
     maplist(string_chars,Strings,Rucksacks).
 
 find_element_in_boths(Rucksack, InBoth) :-

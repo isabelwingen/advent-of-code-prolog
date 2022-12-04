@@ -1,3 +1,5 @@
+:- use_module(util, [read_input_as_lines/2]).
+
 % Facts
 result([rock,rock],draw).
 result([paper,paper],draw).
@@ -28,17 +30,11 @@ matching2("Y",draw).
 matching2("Z",won).
 
 % Read Input
-drop_last([_], []).
-drop_last([H|T], [H|S]) :-
-    drop_last(T,S).
-
 split_pair(X,Y) :- split_string(X," ","",Y).
 
 read_input(P) :-
-    read_file_to_string("resources/day2.txt",S,[]),
-    split_string(S,"\n","",L),
-    maplist(split_pair,L,Q),
-    drop_last(Q,P).
+    read_input_as_lines("resources/day2.txt", Lines),
+    maplist(split_pair,Lines,P).
 
 % Part 1
 roundInPart1([ABC,XYZ],Score) :-

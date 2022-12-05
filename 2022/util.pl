@@ -9,6 +9,7 @@ read_input_as_lines(Path, Strings) :-
     split_string(S, "\n", "", L),
     drop_last(L, Strings).
 
+% Split list by certain element.
 split_list_by(L,SplitItem,[L]) :-
     \+ member(SplitItem, L), !.
 split_list_by(ListToBeSplitted, SplitItem, [A|T]) :-
@@ -16,9 +17,9 @@ split_list_by(ListToBeSplitted, SplitItem, [A|T]) :-
     \+ member(SplitItem, A),
     split_list_by(B, SplitItem, T).
 
+% Partitions the list in sublist of equal length (last element may have fewer elements)
 partition(L,Size,Result) :-
     partition(L, Size, [], Result).
-
 partition(L, Size, [], [L]) :-
     length(L, N),
     N < Size, !.
@@ -32,6 +33,7 @@ partition([H|T], Size, Store, Result) :-
 first([H|_], H).
 rest([_|T], T).
 
+% Switches rows and columns
 transform(L,[]) :-
     first(L,[]), !.
 transform(L,[Q|Result]) :-
@@ -39,12 +41,14 @@ transform(L,[Q|Result]) :-
     maplist(rest, L, P),
     transform(P,Result).
 
+% Remove all Elements from a list, without changing order
 remove([], _, []) :- !.
 remove([Elem|L], Elem, K) :-
     !, remove(L, Elem, K).
 remove([H|L], Elem, [H|K]) :-
     remove(L, Elem, K).
 
+% Replaces the element at Index with new Elem.
 replace0([_|L], 0, Elem, [Elem|L]) :- !.
 replace0([H|List], Index, Elem, [H|NewList]) :-
     IndexMinus1 is Index-1,

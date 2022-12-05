@@ -1,18 +1,16 @@
 :- use_module(util, [read_input_as_lines/2, split_list_by/3, partition/3, drop_last/2, transform/2, remove/3, replace1/4]).
 
 % Parse upper part of file
+
+% Selects the letter from the groupings
 get_second_elem(List, Elem) :-
     nth0(1, List, Elem).
 
+% Reads a single line to chars, partitions to partitions of size four, so that the second entry is always the letter (or empty)
 single_stack_line(StackLine, Result) :-
     string_chars(StackLine, P),
     partition(P, 4, Q),
     maplist(get_second_elem, Q, Result).
-
-get_number_of_stacks(NumberLine, NumberOfStacks) :-
-    split_string(NumberLine, " ", "", X),
-    reverse(X, [_, A|_]),
-    number_string(NumberOfStacks, A).
 
 remove_empty_slots(L, K) :-
     remove(L, ' ', K).
@@ -34,13 +32,14 @@ command(CommandString, AA/BB-CC) :-
 read_commands(CommandStrings, Commands) :-
     maplist(command, CommandStrings, Commands).
 
-% Connect the two parts and read input
+% Read Input
 read_input(P, Commands) :-
     read_input_as_lines("resources/day5.txt", X),
     split_list_by(X, "", [Upper, Lower]),
     read_stacks(Upper, P),
     read_commands(Lower, Commands).
 
+% Solve
 first([H|_], H).
 
 reverse_or_not_reverse(A, A, 2).
